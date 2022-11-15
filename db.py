@@ -1,19 +1,19 @@
 class Db:
     def __init__(self):
-        self.dictionary = dict()
+        self.database = {}
 
     def set_value(self, key, val):
-        self.dictionary[key] = val
+        self.database[key] = val
+        return True
 
     def get_value(self, key):
         try:
-            return self.dictionary[key]
+            return self.database[key]
         except KeyError:
             return None
 
     def delete_value(self, key):
-        val = self.dictionary[key]
-        self.dictionary[key] = None
+        val = self.database.pop(key)
         return val
 
 
@@ -26,6 +26,11 @@ def main():
     val = database.delete_value('1')
     print(val)
     print(database.get_value('1'))
+    database.set_value('2', 'Hello')
+    val = database.delete_value('2')
+    print(val)
+    print(database.get_value('2'))
+
 
 
 if __name__ == '__main__':
