@@ -13,8 +13,11 @@ class Db:
             return None
 
     def delete_value(self, key):
-        val = self.database.pop(key)
-        return val
+        try:
+            val = self.database.pop(key)
+            return val
+        except KeyError as err:
+            return None
 
 
 def main():

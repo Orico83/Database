@@ -37,12 +37,22 @@ class FileDb(Db):
         val = super().get_value(key)
         return val
 
+    def delete_value(self, key):
+        self.load()
+        super().delete_value(key)
+        self.dump()
+
 
 def main():
     db = FileDb()
     check = db.set_value(4, 2)
+    db.set_value(3, 5)
     print(check)
     print(db.get_value(4))
+    db.delete_value(4)
+    db.delete_value(5)
+    print(db.get_value(4))
+
 
 
 if __name__ == '__main__':
