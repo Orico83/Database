@@ -1,6 +1,4 @@
-import _pickle
 import pickle
-
 from db import Db
 import os
 
@@ -34,13 +32,13 @@ class FileDb(Db):
 
     def get_value(self, key):
         self.load()
-        val = super().get_value(key)
-        return val
+        return super().get_value(key)
 
     def delete_value(self, key):
         self.load()
-        super().delete_value(key)
+        res = super().delete_value(key)
         self.dump()
+        return res
 
 
 def main():
@@ -52,7 +50,6 @@ def main():
     db.delete_value(4)
     db.delete_value(5)
     print(db.get_value(4))
-
 
 
 if __name__ == '__main__':

@@ -14,9 +14,8 @@ class Db:
 
     def delete_value(self, key):
         try:
-            val = self.database.pop(key)
-            return val
-        except KeyError as err:
+            return self.database.pop(key)
+        except KeyError:
             return None
 
 

@@ -1,6 +1,6 @@
+from file_db import FileDb
 import threading
 import multiprocessing
-from file_db import FileDb
 import logging
 
 
@@ -39,6 +39,7 @@ class SyncDb:
         res = self.database.get_value(key)
         self.read_release()
         return res
+
     def set_value(self, key, val):
         self.write_get()
         res = self.database.set_value(key, val)

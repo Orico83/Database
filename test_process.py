@@ -22,19 +22,19 @@ def test_read(db):
 def main():
     logging.debug("Starting tests for Multiprocessing")
     db = SyncDb(FileDb(), False)
-    logging.debug("\n--------------------------------------------------------\n")
+    logging.debug("\n------------------------------------------------------------\n")
     logging.info("testing simple write perms")
     p1 = multiprocessing.Process(target=test_write, args=(db, ))
     p1.start()
     p1.join()
     logging.info("test successful")
-    logging.debug("\n--------------------------------------------------------\n")
+    logging.debug("\n------------------------------------------------------------\n")
     logging.info("testing simple read perms")
     p1 = multiprocessing.Process(target=test_read, args=(db, ))
     p1.start()
     p1.join()
     logging.info("test successful")
-    logging.debug("\n--------------------------------------------------------\n")
+    logging.debug("\n------------------------------------------------------------\n")
     logging.info("testing read blocks writing")
     p1 = multiprocessing.Process(target=test_read, args=(db, ))
     p2 = multiprocessing.Process(target=test_write, args=(db, ))
@@ -43,7 +43,7 @@ def main():
     p1.join()
     p2.join()
     logging.info("test successful")
-    logging.debug("\n--------------------------------------------------------\n")
+    logging.debug("\n------------------------------------------------------------\n")
     logging.info("testing write blocks reading")
     p1 = multiprocessing.Process(target=test_write, args=(db, ))
     p2 = multiprocessing.Process(target=test_read, args=(db, ))
@@ -52,7 +52,7 @@ def main():
     p1.join()
     p2.join()
     logging.info("test successful")
-    logging.debug("\n--------------------------------------------------------\n")
+    logging.debug("\n------------------------------------------------------------\n")
     logging.info("testing multi reading perms possible")
     processes = []
     for i in range(5):
@@ -62,10 +62,10 @@ def main():
     for i in processes:
         i.join()
     logging.info("test successful")
-    logging.debug("\n--------------------------------------------------------\n")
+    logging.debug("\n------------------------------------------------------------\n")
     logging.info("testing load")
     processes = []
-    for i in range(15):
+    for i in range(5):
         process = multiprocessing.Process(target=test_read, args=(db, ))
         process.start()
         processes.append(process)
@@ -76,7 +76,7 @@ def main():
     for i in processes:
         i.join()
     logging.info("test successful")
-    logging.debug("\n--------------------------------------------------------\n")
+    logging.debug("\n------------------------------------------------------------\n")
     logging.info("testing values stay correct")
     p1 = multiprocessing.Process(target=test_read, args=(db,))
     p1.start()
