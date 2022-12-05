@@ -1,7 +1,6 @@
 from file_db import FileDb
 import threading
 import multiprocessing
-import logging
 
 
 class SyncDb:
@@ -16,23 +15,19 @@ class SyncDb:
 
     def read_get(self):
         self.read.acquire()
-        logging.debug("Sync Database: acquired reading permissions")
 
     def read_release(self):
         self.read.release()
-        logging.debug("Sync Database: released reading permissions")
 
     def write_get(self):
         self.write.acquire()
         for i in range(10):
             self.read.acquire()
-        logging.debug("Sync Database: acquired writing permissions")
 
     def write_release(self):
         for i in range(10):
             self.read.release()
         self.write.release()
-        logging.debug("Sync Database: released writing permissions")
 
     def get_value(self, key):
         self.read_get()
@@ -52,5 +47,9 @@ class SyncDb:
         self.write_release()
 
 
+def main():
+    pass
+
+
 if __name__ == '__main__':
-    logging.basicConfig(filename="SyncDB.log", filemode="a", level=logging.DEBUG, format=FORMAT, datefmt=DATEFMT)
+    main()
