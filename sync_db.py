@@ -1,6 +1,11 @@
 from file_db import FileDb
 import threading
 import multiprocessing
+import logging
+
+
+FORMAT = '%(asctime)s.%(msecs)03d - %(message)s'
+DATEFMT = '%H:%M:%S'
 
 
 class SyncDb:
@@ -14,17 +19,21 @@ class SyncDb:
             self.write = multiprocessing.Lock()
 
     def read_get(self):
+        logging.info("SyncDb: Reading permission acquired")
         self.read.acquire()
 
     def read_release(self):
+        logging.info("SyncDb: Reading permission released")
         self.read.release()
 
     def write_get(self):
+        logging.info("SyncDb: Writing permission acquired")
         self.write.acquire()
         for i in range(10):
             self.read.acquire()
 
     def write_release(self):
+        logging.info("SyncDb: Writing permission released")
         for i in range(10):
             self.read.release()
         self.write.release()
