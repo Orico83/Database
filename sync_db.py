@@ -19,24 +19,26 @@ class SyncDb:
             self.write = multiprocessing.Lock()
 
     def read_get(self):
-        logging.info("SyncDb: Reading permission acquired")
         self.read.acquire()
+        logging.info("SyncDb: Reading permission acquired")
+        self.write.acquire()
 
     def read_release(self):
-        logging.info("SyncDb: Reading permission released")
         self.read.release()
+        logging.info("SyncDb: Reading permission released")
 
     def write_get(self):
-        logging.info("SyncDb: Writing permission acquired")
         self.write.acquire()
+        logging.info("SyncDb: Writing permission acquired")
         for i in range(10):
+            logging.info(i)
             self.read.acquire()
 
     def write_release(self):
-        logging.info("SyncDb: Writing permission released")
         for i in range(10):
             self.read.release()
         self.write.release()
+        logging.info("SyncDb: Writing permission released")
 
     def get_value(self, key):
         self.read_get()

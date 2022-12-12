@@ -75,12 +75,12 @@ def main():
     logging.info("Testing writing blocks reading")
     readers = []
     writers = []
-    for i in range(50):
-        r = threading.Thread(target=test_read, args=(db,))
-        readers.append(r)
     for i in range(10):
         w = threading.Thread(target=test_write, args=(db,))
         writers.append(w)
+    for i in range(50):
+        r = threading.Thread(target=test_read, args=(db,))
+        readers.append(r)
     for writer in writers:
         writer.start()
     for reader in readers:
