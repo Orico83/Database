@@ -10,14 +10,14 @@ ENTER = "--------------------------------------------------\n"
 
 def test_write(db):
     logging.info("Write test started")
-    for i in range(1000):
+    for i in range(100):
         assert db.set_value(i, f"t{str(i)}")
     logging.info("Writing test successful")
 
 
 def test_read(db):
     logging.info("Read test started")
-    for i in range(1000):
+    for i in range(100):
         assert db.get_value(i) == f"t{str(i)}"
     logging.info("Reading test successful")
 

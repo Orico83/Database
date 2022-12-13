@@ -13,14 +13,28 @@ class FileDb(Db):
                 pickle.dump({}, file)
 
     def load(self):
+        """
+        Loads the database from the file.
+        :return: None.
+        """
         with open(FILE, 'rb') as file:
             self.database = pickle.load(file)
 
     def dump(self):
+        """
+        Updates the database to the file.
+        :return: None.
+        """
         with open(FILE, 'wb') as file:
             pickle.dump(self.database, file)
 
     def set_value(self, key, val):
+        """
+
+        :param key:
+        :param val:
+        :return:
+        """
         try:
             self.load()
             res = super().set_value(key, val)
@@ -31,26 +45,21 @@ class FileDb(Db):
             return False
 
     def get_value(self, key):
+        """
+
+        :param key:
+        :return:
+        """
         self.load()
         return super().get_value(key)
 
     def delete_value(self, key):
+        """
+
+        :param key:
+        :return:
+        """
         self.load()
         res = super().delete_value(key)
         self.dump()
         return res
-
-
-def main():
-    db = FileDb()
-    check = db.set_value(4, 2)
-    db.set_value(3, 5)
-    print(check)
-    print(db.get_value(4))
-    db.delete_value(4)
-    db.delete_value(5)
-    print(db.get_value(4))
-
-
-if __name__ == '__main__':
-    main()
