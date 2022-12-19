@@ -20,24 +20,24 @@ class SyncDb:
 
     def read_get(self):
         """
-
-        :return:
+        Acquire reading permission
+        :return: None
         """
         self.read.acquire()
         logging.info("SyncDb: Reading permission acquired")
 
     def read_release(self):
         """
-
-        :return:
+        Release reading permissions
+        :return: None
         """
         logging.info("SyncDb: Reading permission released")
         self.read.release()
 
     def write_get(self):
         """
-
-        :return:
+        Acquire writing permission
+        :return: None
         """
         self.write.acquire()
         for i in range(10):
@@ -46,8 +46,8 @@ class SyncDb:
 
     def write_release(self):
         """
-
-        :return:
+        Release writing permission
+        :return: None
         """
         logging.info("SyncDb: Writing permission released")
         for i in range(10):
@@ -58,7 +58,7 @@ class SyncDb:
         """
 
         :param key:
-        :return:
+        :return: The key's value
         """
         self.read_get()
         res = self.database.get_value(key)
@@ -79,11 +79,12 @@ class SyncDb:
 
     def delete_value(self, key):
         """
-
+        Acquire writing permission, delete the key's value and then release writing permission.
         :param key:
-        :return:
+        :return: The deleted value
         """
         self.write_get()
-        self.database.delete_value(key)
+        val = self.database.delete_value(key)
         self.write_release()
+        return val
 

@@ -10,14 +10,14 @@ ENTER = "--------------------------------------------------\n"
 
 def test_write(db):
     logging.info("Write test started")
-    for i in range(100):
+    for i in range(1000):
         assert db.set_value(i, f"t{str(i)}")
     logging.info("Writing test successful")
 
 
 def test_read(db):
     logging.info("Read test started")
-    for i in range(100):
+    for i in range(1000):
         assert db.get_value(i) == f"t{str(i)}"
     logging.info("Reading test successful")
 
@@ -39,20 +39,15 @@ def main():
     logging.info(ENTER)
     db = SyncDb(FileDb(), True)
     logging.info("Testing simple writing permissions")
-    t1 = threading.Thread(target=test_write, args=(db,))
-    t1.start()
-    t1.join()
+    write = threading.Thread(target=test_write, args=(db,))
+    write.start()
+    write.join()
     logging.info(ENTER)
     logging.info("Testing simple reading permissions")
-    t1 = threading.Thread(target=test_read, args=(db,))
-    t1.start()
-    t1.join()
+    read = threading.Thread(target=test_read, args=(db,))
+    read.start()
+    read.join()
     logging.info(ENTER)
-    """logging.info("Testing simple deleting permissions")
-    t1 = threading.Thread(target=test_delete, args=(db,))
-    t1.start()
-    t1.join()
-    logging.info(ENTER)"""
     logging.info("Testing reading blocks writing")
     readers = []
     writers = []
@@ -91,6 +86,10 @@ def main():
         reader.join()
     logging.info("Writing blocks reading test successful")
     logging.info(ENTER)
+    logging.info("Testing delete permissions")
+    t1 = threading.Thread(target=test_delete, args=(db,))
+    t1.start()
+    t1.join()
 
 
 if __name__ == '__main__':

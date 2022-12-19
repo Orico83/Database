@@ -88,6 +88,10 @@ def main():
         reader.join()
     print("Writing blocks reading test successful")
     print(ENTER)
+    print("Testing delete permissions")
+    delete = multiprocessing.Process(target=test_delete, args=(db,))
+    delete.start()
+    delete.join()
 
 
 if __name__ == '__main__':
