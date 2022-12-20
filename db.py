@@ -13,19 +13,19 @@ class Db:
 
     def set_value(self, key, val):
         """
-        Updates the value of the key or adds the key and the value to the database.
-        :param key:
-        :param val:
-        :return:
+        Updates the value of the key if key is in the database, Else, adds the key and the value to the database
+        :param key: key
+        :param val: value to set
+        :return: True if succeeded
         """
         self.database[key] = val
         return True
 
     def get_value(self, key):
         """
-
-        :param key:
-        :return: The value of the key. If the key isn't in the database, returns None.
+        Return the value of key if it's in database, else None
+        :param key: key
+        :return: The value of the key. If the key isn't in the database, returns None
         """
         try:
             return self.database[key]
@@ -34,9 +34,9 @@ class Db:
 
     def delete_value(self, key):
         """
-
-        :param key:
-        :return:
+        Deletes the value of key in the dict and returns it if it's in database. Else, None
+        :param key: key
+        :return: Deleted value if key exists. Else, None
         """
         try:
             return self.database.pop(key)

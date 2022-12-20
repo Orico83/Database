@@ -6,6 +6,9 @@ FILE = "database.bin"
 
 
 class FileDb(Db):
+    """
+    File database constructor
+    """
     def __init__(self):
         super().__init__()
         if not os.path.exists(FILE):
@@ -30,10 +33,11 @@ class FileDb(Db):
 
     def set_value(self, key, val):
         """
-
-        :param key:
-        :param val:
-        :return:
+        Updates the value of the key to the file if key is in the database.
+        Else, adds the key and the value to the file database
+        :param key: key
+        :param val: value to set
+        :return: True if succeeded. Else, False
         """
         try:
             self.load()
@@ -46,18 +50,18 @@ class FileDb(Db):
 
     def get_value(self, key):
         """
-
-        :param key:
-        :return:
+        Return the value of key if it's in database, else None
+        :param key: key
+        :return: The value of the key. If the key isn't in the database, returns None
         """
         self.load()
         return super().get_value(key)
 
     def delete_value(self, key):
         """
-
-        :param key:
-        :return:
+        Deletes the value of key in the file dict and returns it if it's in database. Else, None
+        :param key: key
+        :return: Deleted value if key exists. Else, None
         """
         self.load()
         res = super().delete_value(key)
