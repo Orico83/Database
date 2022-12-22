@@ -51,45 +51,55 @@ def main():
     logging.info("Testing reading blocks writing")
     readers = []
     writers = []
+    deletes = []
     for i in range(50):
         r = threading.Thread(target=test_read, args=(db,))
         readers.append(r)
-    for i in range(10):
+    for i in range(5):
         w = threading.Thread(target=test_write, args=(db,))
+        d = threading.Thread(target=test_delete, args=(db,))
+        deletes.append(d)
         writers.append(w)
     for reader in readers:
         reader.start()
     for writer in writers:
         writer.start()
+    for delete in deletes:
+        delete.start()
     for reader in readers:
         reader.join()
     for writer in writers:
         writer.join()
+    for delete in deletes:
+        delete.join()
     logging.info("Reading blocks writing test successful")
     logging.info(ENTER)
     logging.info("Testing writing blocks reading")
     readers = []
     writers = []
-    for i in range(10):
+    deletes = []
+    for i in range(5):
         w = threading.Thread(target=test_write, args=(db,))
+        d = threading.Thread(target=test_delete, args=(db,))
+        deletes.append(d)
         writers.append(w)
     for i in range(50):
         r = threading.Thread(target=test_read, args=(db,))
         readers.append(r)
+    for delete in deletes:
+        delete.start()
     for writer in writers:
         writer.start()
     for reader in readers:
         reader.start()
+    for delete in deletes:
+        delete.join()
     for writer in writers:
         writer.join()
     for reader in readers:
         reader.join()
     logging.info("Writing blocks reading test successful")
     logging.info(ENTER)
-    logging.info("Testing delete permissions")
-    t1 = threading.Thread(target=test_delete, args=(db,))
-    t1.start()
-    t1.join()
 
 
 if __name__ == '__main__':
