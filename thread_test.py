@@ -1,6 +1,6 @@
 """
-Author: Ori Cohen.
-Date: 23/12/2022.
+Author: Ori Cohen
+Date: 23/12/2022
 Tests the database in threads mode.
 """
 
