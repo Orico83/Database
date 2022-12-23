@@ -1,7 +1,10 @@
 """
-Author: Ori Cohen.
-Date: 23/12/2022.
-Tests the database in processes mode."""
+Author: Ori Cohen
+Date: 23/12/2022
+Tests the database in processes mode.
+"""
+
+
 from sync_db import SyncDb
 from file_db import FileDb
 import multiprocessing
