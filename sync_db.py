@@ -1,7 +1,10 @@
 """
 Author: Ori Cohen.
 Date: 23/12/2022.
-Implements the synchronization between threads/processes and reading and writing permissions."""
+Implements the synchronization between threads/processes and reading and writing permissions.
+"""
+
+
 from file_db import FileDb
 import threading
 import multiprocessing
@@ -91,4 +94,3 @@ class SyncDb:
         val = self.database.delete_value(key)
         self.write_release()
         return val
-
