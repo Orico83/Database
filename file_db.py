@@ -1,3 +1,8 @@
+"""
+Author: Ori Cohen.
+Date: 23/12/2022.
+File database class with writing, reading and deleting capabilities to database.bin.
+Inherits from DB."""
 import pickle
 from db import Db
 import os

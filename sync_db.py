@@ -1,3 +1,7 @@
+"""
+Author: Ori Cohen.
+Date: 23/12/2022.
+Implements the synchronization between threads/processes and reading and writing permissions."""
 from file_db import FileDb
 import threading
 import multiprocessing

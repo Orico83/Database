@@ -1,3 +1,8 @@
+"""
+Author: Ori Cohen.
+Date: 23/12/2022.
+Tests the database in threads mode.
+"""
 from sync_db import SyncDb
 from file_db import FileDb
 import threading
@@ -9,20 +14,35 @@ ENTER = "--------------------------------------------------\n"
 
 
 def test_write(db):
+    """
+    Tests writing values to database
+    :param db: database
+    :return: None
+    """
     logging.info("Write test started")
     for i in range(1000):
         assert db.set_value(i, f"t{str(i)}")
-    logging.info("Writing test successful")
+    logging.info("Write test successful")
 
 
 def test_read(db):
+    """
+    Tests reading values from database
+    :param db: database
+    :return: None
+    """
     logging.info("Read test started")
     for i in range(1000):
         assert db.get_value(i) == f"t{str(i)}"
-    logging.info("Reading test successful")
+    logging.info("Read test successful")
 
 
 def test_delete(db):
+    """
+    Tests deleting values from database
+    :param db: database
+    :return: None
+    """
     logging.info("Delete test started")
     for i in range(100):
         db.delete_value(i)
@@ -30,7 +50,7 @@ def test_delete(db):
         assert db.get_value(i) is None
     for i in range(100, 1000):
         assert db.get_value(i) == f"t{str(i)}"
-    logging.info("deleting test successful")
+    logging.info("delete test successful")
 
 
 def main():
@@ -77,23 +97,16 @@ def main():
     logging.info("Testing writing blocks reading")
     readers = []
     writers = []
-    deletes = []
-    for i in range(5):
+    for i in range(10):
         w = threading.Thread(target=test_write, args=(db,))
-        d = threading.Thread(target=test_delete, args=(db,))
-        deletes.append(d)
         writers.append(w)
     for i in range(50):
         r = threading.Thread(target=test_read, args=(db,))
         readers.append(r)
-    for delete in deletes:
-        delete.start()
     for writer in writers:
         writer.start()
     for reader in readers:
         reader.start()
-    for delete in deletes:
-        delete.join()
     for writer in writers:
         writer.join()
     for reader in readers:

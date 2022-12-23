@@ -1,6 +1,7 @@
 """
 Author: Ori Cohen.
-Date: 13/12/2022.
+Date: 23/12/2022.
+Base database class.
 """
 
 
@@ -39,6 +40,8 @@ class Db:
         :return: Deleted value if key exists. Else, None
         """
         try:
-            return self.database.pop(key)
+            val = self.database[key]
+            self.database[key] = None
+            return val
         except KeyError:
             return None
